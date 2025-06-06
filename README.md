@@ -68,13 +68,13 @@ Mathematically:
 ---
 
 ## 3. File Structure 🗂️
-
-# 2D-GPE-Simulation/
-# │
-# ├── gpe_2d_simulation.py # Main simulation script
-# ├── README.md # This document
-# └── LICENSE # MIT License file
-
+```bash
+2D-GPE-Simulation/
+│
+├── gpe_2d_simulation.py     # Main simulation script
+├── README.md                # This document
+└── LICENSE                  # MIT License file
+```
 ---
 
 ## 4. Usage Instructions 🛠️
