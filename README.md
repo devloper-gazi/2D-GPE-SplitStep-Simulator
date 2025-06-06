@@ -23,6 +23,12 @@ This repository contains a Python implementation of the two-dimensional (2D) Gro
 
 We solve the conservative 2D GPE (ℏ = 1, m* = 1) for a condensate wavefunction \(\psi(x,y,t)\):
 
+<p>
+  \( i \frac{\partial \psi(x,y,t)}{\partial t}
+  = \left[ -\tfrac{1}{2}\bigl(\partial_x^2 + \partial_y^2\bigr)
+  + V(x,y) + g\,|\psi(x,y,t)|^2 \right] \psi(x,y,t) \,.\)
+</p>
+
 \[
 i \frac{\partial \psi(x,y,t)}{\partial t}
 = \left[ -\tfrac{1}{2}\bigl(\partial_x^2 + \partial_y^2\bigr)
