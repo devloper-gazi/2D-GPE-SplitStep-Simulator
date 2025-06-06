@@ -177,20 +177,20 @@ plt.show()
 Below are the default values used throughout the simulation:
 
 - **Spatial grid**  
-  - Number of points: `N_x = N_y = 256`  
-  - Physical extent: `L_x = L_y = 10.0` (so that \(\Delta x = \Delta y = 10.0 / 256\))  
+  - Number of points: `Nₓ = Nᵧ = 256`  
+  - Physical extent: `Lₓ = Lᵧ = 10.0` → Δx = Δy = 10.0 ⁄ 256 ≈ 0.0391
 
 - **Time step**  
-  - \(\Delta t = 0.0002\)  
+  - Δt = 0.0002  
 
 - **Interaction coefficient**  
-  - \(g = 1.0\)  
+  - g = 1.0  
 
 - **Periodic potential**  
-  - Depth: \(V_0 = 10.0\)  
-  - Period: \(a = 2.0\)  
+  - Depth: V₀ = 10.0  
+  - Period: a = 2.0  
 
-- **Number of time‐evolution steps**  
-  - `steps = 2000`  
+- **Number of time-evolution steps**  
+  - `steps = 2000`
 
 These values can be adjusted in `gpe_2d_simulation.py` to explore different regimes or to optimise performance and accuracy.  
