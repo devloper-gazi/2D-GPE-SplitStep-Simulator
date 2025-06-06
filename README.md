@@ -21,75 +21,49 @@ This repository contains a Python implementation of the two-dimensional (2D) Gro
 
 ## 1. Mathematical Model 📐
 
-We solve the conservative 2D GPE (ℏ = 1, m* = 1) for a condensate wavefunction \(\psi(x,y,t)\):
+We solve the conservative 2D GPE (ℏ = 1, m* = 1) for a condensate wavefunction ψ(x,y,t):
 
-<p>
-  \( i \frac{\partial \psi(x,y,t)}{\partial t}
-  = \left[ -\tfrac{1}{2}\bigl(\partial_x^2 + \partial_y^2\bigr)
-  + V(x,y) + g\,|\psi(x,y,t)|^2 \right] \psi(x,y,t) \,.\)
-</p>
-
-\[
-i \frac{\partial \psi(x,y,t)}{\partial t}
-= \left[ -\tfrac{1}{2}\bigl(\partial_x^2 + \partial_y^2\bigr)
-+ V(x,y) + g\,|\psi(x,y,t)|^2 \right] \psi(x,y,t)\,.
-\]
-
-- \(\psi(x,y,t)\): complex-valued condensate wavefunction  
-- \(g\): interaction strength (nonlinear coefficient)  
-- \(V(x,y)\): external periodic potential  
+- ψ(x,y,t): complex-valued condensate wavefunction  
+- g: interaction strength (nonlinear coefficient)  
+- V(x,y): external periodic potential  
 
 ### 1.1 Periodic Potential 📏
 
 We choose a simple separable 2D potential that mimics a photonic crystal:
 
-\[
-V(x,y) \;=\; V_0 \Bigl[\cos^2\!\bigl(\tfrac{\pi x}{a}\bigr) 
-+ \cos^2\!\bigl(\tfrac{\pi y}{a}\bigr)\Bigr]\,,
-\]
+V(x,y) = V₀ [ cos²(πx/a) + cos²(πy/a) ]
 
 where:  
-- \(V_0\) is the potential depth (e.g., 10)  
-- \(a\) is the lattice period (e.g., 2)
+- V₀ is the potential depth (e.g., 10)  
+- a is the lattice period (e.g., 2)
 
 ---
 
 ## 2. Numerical Method: Split-Step Fourier ⚛️
 
-We discretise the square domain \([-L_x/2,\,L_x/2]\times[-L_y/2,\,L_y/2]\) into \(N_x\times N_y\) grid points. Time step is \(\Delta t\). Each full step is performed by Strang splitting into three sub-steps:
+We discretise the square domain [-Lₓ/2, Lₓ/2] × [-Lᵧ/2, Lᵧ/2] into Nₓ × Nᵧ grid points. Time step is Δt. Each full step is performed by Strang splitting into three sub-steps:
 
 1. **Potential + Nonlinear Half Step**  
-   \[
-   \psi(x,y,t) 
-   \;\longleftarrow\; 
-   \psi(x,y,t)\,\exp\!\Bigl[-\,i\bigl(V(x,y)+g\,|\psi|^2\bigr)\,\tfrac{\Delta t}{2}\Bigr].
-   \]
+ψ(x,y,t) ← ψ(x,y,t) × exp[ -i ( V(x,y) + g |ψ|² ) × (Δt/2) ]
 
 2. **Kinetic Half Step (2D Fourier Space)**  
-   - Compute \(\Psi(k_x,k_y) = \mathcal{F}_{2D}[\psi(x,y,t)]\).  
-   - Multiply by \(\exp\bigl[-\,i\,(k_x^2 + k_y^2)\,\tfrac{\Delta t}{2}\bigr]\).  
-   - Inverse 2D Fourier transform back to real space.  
+- Compute Ψ(kₓ,kᵧ) = 𝔽₂ᴰ[ψ(x,y,t)]  
+- Multiply by exp[ -i (kₓ² + kᵧ²) × (Δt/2) ]  
+- Inverse 2D Fourier transform back to real space  
 
-   Mathematically:  
-   \[
-   \Psi(k_x,k_y) \;=\; \mathcal{F}_{2D}[\psi(x,y,t)],\quad
-   \Psi(k_x,k_y)\;\longleftarrow\;\Psi(k_x,k_y)\,\exp\!\Bigl[-\,i\,(k_x^2 + k_y^2)\,\tfrac{\Delta t}{2}\Bigr],\quad
-   \psi(x,y)\;=\;\mathcal{F}_{2D}^{-1}[\Psi(k_x,k_y)].
-   \]
+Mathematically:  
+
+Ψ(kₓ,kᵧ) = 𝔽₂ᴰ[ψ(x,y,t)]
+Ψ(kₓ,kᵧ) ← Ψ(kₓ,kᵧ) × exp[ -i (kₓ² + kᵧ²) × (Δt/2) ]
+ψ(x,y) = 𝔽₂ᴰ⁻¹[Ψ(kₓ,kᵧ)]
+
 
 3. **Potential + Nonlinear Half Step (again)**  
-   \[
-   \psi(x,y,t + \Delta t) 
-   \;\longleftarrow\; 
-   \psi(x,y,t)\,\exp\!\Bigl[-\,i\bigl(V(x,y)+g\,|\psi|^2\bigr)\,\tfrac{\Delta t}{2}\Bigr].
-   \]
+ψ(x,y,t + Δt) ← ψ(x,y,t) × exp[ -i ( V(x,y) + g |ψ|² ) × (Δt/2) ]
 
 4. **Normalisation**  
-   \[
-   \psi \;\longleftarrow\; 
-   \frac{\psi}{\sqrt{\sum_{i,j} |\psi_{i,j}|^2\,\Delta x\,\Delta y}}\,,
-   \]
-   to preserve the total norm.
+
+ψ ← ψ / sqrt( Σᵢⱼ |ψᵢⱼ|² Δx Δy )
 
 ---
 
