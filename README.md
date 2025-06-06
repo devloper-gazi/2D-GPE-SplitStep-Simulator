@@ -116,7 +116,9 @@ This helps avoid conflicts if pip has issues installing globally.
 Ensure you have Python 3 (≥ 3.7) and the required packages:
 ```bash
 ● pip install numpy matplotlib
+```
 ⚠️ If you encounter permission errors, try:
+```bash
 ● pip install --user numpy matplotlib
 ```
 4. Run the simulation ✨
